@@ -1470,6 +1470,3 @@ welch_ttest <- function(m1,
   
   return(dat)
 }
-
-
-

@@ -11,9 +11,7 @@ args <- commandArgs(trailingOnly=T)
 setwd(do.call(file.path, as.list(strsplit(args[1], "\\|")[[1]])))
 
 # load environment ----
-if (args[6] == "refresh") {
-  if (file.exists("env.RData")) {load("env.RData")}
-}
+if (file.exists("env.RData")) {load("env.RData")}
 
 # load custom functions ----
 source(do.call(file.path, as.list(strsplit(paste0(args[2], "00_functions.R"), "\\|")[[1]])), 
@@ -32,10 +30,6 @@ glue::glue("RUNNING R SERVER ...") %>% print()
 glue::glue("Package status: {error}") %>% print()
 glue::glue("\n") %>% print()
 
-# Log of run ----
-if (args[6] == "refresh") {str = "Refresh: Loading the last saved environment and refreshing all the global variables using the latest interface"} 
-if (args[6] == "reset") {str = "Reset: Initialising a blank environment with all the global variables using the latest interface"}
-
 #====================================================
 
 # global variables ----
@@ -47,22 +41,10 @@ g_file_name                         <- args[5]
 
 g_file_path                         <- file.path(g_excel_frontend_dir, g_file_name)
 g_wd                                <- g_excel_backend_temp_dir
-
-g_tick                              <- "\u2713"
-g_cross                             <- "\u2715"
-
 g_file_log                          <- file.path(g_excel_frontend_dir, "Latest R logs.txt")
 
 unlink(g_file_log)
 
-if (args[6] == "reset") {
-  all <- dir(".",  pattern=".*")
-  keep <- dir(".",  pattern=".+\\.R$")
-  junk <- all[! all %in% keep]
-  file.remove(junk) %>% 
-    invisible() %>% 
-    suppressWarnings()
-} 
 #====================================================
 
 # Log of run ----

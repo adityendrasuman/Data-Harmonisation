@@ -27,7 +27,6 @@ error = f_libraries(
 g_excel_backend_temp_nospace_dir_rf <- do.call(file.path, as.list(strsplit(tail(args, 3)[1], "\\|")[[1]]))
 g_excel_frontend_dir                 <- do.call(file.path, as.list(strsplit(tail(args, 2)[1], "\\|")[[1]]))
 g_file_name                         <- tail(args, 1)[1]
-
 g_file_path                         <- file.path(g_excel_frontend_dir, g_file_name)
 g_wd                                <- g_excel_frontend_dir
 g_file_log                          <- file.path(g_excel_frontend_dir, "Latest R logs.txt")
@@ -46,7 +45,7 @@ unlink(g_file_log)
 
 # Log of run ----
 glue::glue("\n") %>% f_log_string(g_file_log)
-glue::glue("finished run in {round(Sys.time() - start_time, 0)} secs. Saving the environment!") %>% f_log_string(g_file_log)
+glue::glue("finished run in {round(Sys.time() - start_time, 0)} secs!") %>% f_log_string(g_file_log)
 glue::glue("\n\n") %>% f_log_string(g_file_log)
 
 # Close the R code ----

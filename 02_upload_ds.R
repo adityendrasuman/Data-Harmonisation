@@ -45,6 +45,30 @@ row_nums_all <- nrow(dt_01)
 row_nums_property <- row_header - 1
 row_nums_data <- row_nums_all - row_header
 
+col_nums_all <- ncol(dt_01)
+
+table_data <- dt_01[c(row_header + 1 : row_nums_data), c(2:col_nums_all)]
+colnames(table_data) <- dt_01[c(row_header), c(2:col_nums_all)]
+table_data <- janitor::remove_empty(table_data, which = "cols")
+
+valid_header <- table_data %>% colnames()
+all_header <- dt_01 %>% 
+  slice(row_header) %>% 
+  unlist()
+
+relevant_columns <- which(all_header %in% valid_header)
+
+table_properties <- dt_01[c(1 : row_nums_property), c(relevant_columns)]
+colnames(table_properties) <- valid_header
+rownames(table_properties) <- dt_01[c(1 : row_nums_property), 1]
+table_properties <- table_properties %>% 
+  t() %>% 
+  as.data.frame() %>% 
+  rownames_to_column(var = "Var Name >>") %>% 
+  remove_rownames()
+
+
+
 
 #====================================================
 

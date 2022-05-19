@@ -40,6 +40,12 @@ glue::glue("Uploading data from the excel interface...") %>% print()
 dt_01 <- f_read_xl(g_file_path, namedRegion = "upload_ds", colNames = F, rowNames = F)
 glue::glue("Imported data has {ncol(dt_01)} columns and {nrow(dt_01)} rows") %>% f_log_string(g_file_log)
 
+row_header <- which(dt_01[1] == "Name >>") 
+row_nums_all <- nrow(dt_01)
+row_nums_property <- row_header - 1
+row_nums_data <- row_nums_all - row_header
+
+
 #====================================================
 
 # Log of run ----
